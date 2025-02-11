@@ -1,0 +1,8 @@
+@import "tailwindcss";
+
+.bg-color {
+  background-color: yellow;
+}
+.text-color {
+  color: black;
+}
