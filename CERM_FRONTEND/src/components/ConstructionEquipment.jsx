@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import Card from "./Card";
 import CardContent from "./CardContent";
+
 const equipmentData = [
   {
     category: "Cranes",
@@ -48,30 +49,40 @@ const equipmentData = [
 ];
 
 const ConstructionEquipment = () => {
+  const [selectedCategory, setSelectedCategory] = useState(equipmentData[0]);
+
   return (
-    <div className="p-8">
+    <div className="p-8 mt-14">
       <h1 className="text-3xl font-bold mb-6 text-gray-800">Construction Equipment Rental Costs</h1>
+      
+      <label className="block mb-4 text-lg font-medium text-gray-700">Select Equipment Category:</label>
+      <select
+        className="p-2 border border-gray-300 rounded-md mb-6 w-full md:w-1/3"
+        value={selectedCategory.category}
+        onChange={(e) => setSelectedCategory(equipmentData.find(cat => cat.category === e.target.value))}
+      >
+        {equipmentData.map((category, index) => (
+          <option key={index} value={category.category}>{category.category}</option>
+        ))}
+      </select>
 
-      {equipmentData.map((category, index) => (
-        <div key={index} className="mb-8">
-          <h2 className="text-xl font-semibold text-gray-700 mb-4">{category.category}</h2>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {category.items.length > 0 ? (
-              category.items.map((item, idx) => (
-                <Card key={idx} className="p-4 shadow-lg">
-                  <CardContent>
-                    <h3 className="text-lg font-medium">{item.name}</h3>
-                    {item.price && <p className="text-sm text-gray-600">{item.price}</p>}
-                  </CardContent>
-                </Card>
-              ))
-            ) : (
-              <p className="text-gray-500">No equipment listed in this category.</p>
-            )}
-          </div>
+      <div>
+        <h2 className="text-xl font-semibold text-gray-700 mb-4">{selectedCategory.category}</h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {selectedCategory.items.length > 0 ? (
+            selectedCategory.items.map((item, idx) => (
+              <Card key={idx} className="p-4 shadow-lg">
+                <CardContent>
+                  <h3 className="text-lg font-medium">{item.name}</h3>
+                  {item.price && <p className="text-sm text-gray-600">{item.price}</p>}
+                </CardContent>
+              </Card>
+            ))
+          ) : (
+            <p className="text-gray-500">No equipment listed in this category.</p>
+          )}
         </div>
-      ))}
+      </div>
     </div>
   );
 };

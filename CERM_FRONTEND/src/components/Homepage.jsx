@@ -10,7 +10,7 @@ const Homepage = () => {
       <Navbar />
       {/* Hero Section */}
       <HeroSection />
-      <ConstructionEquipment/>
+      
       {/* Features Section */}
       <section className="py-16 px-5 text-center">
         <h2 className="text-3xl font-bold text-gray-800">
