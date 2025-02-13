@@ -5,6 +5,8 @@ import App from "./App.jsx";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import LoginForm from "./components/Login.jsx";
 import RegistrationForm from "./components/Register.jsx";
+import Browseequipment from "./components/Browseequipment.jsx";
+import Dashboard from "./components/Dashboard.jsx";
 
 const router = createBrowserRouter([
   {
@@ -19,6 +21,14 @@ const router = createBrowserRouter([
     path: "/register",
     element: <RegistrationForm />,
   },
+  {
+    path: "/browse-equipment",
+    element: <Browseequipment/>
+  },
+  {
+    path: "/dashboard",
+    element: <Dashboard/>
+  }
 ]);
 
 createRoot(document.getElementById("root")).render(
