@@ -24,6 +24,11 @@ const Navbar = () => {
           </Link>
         </li>
         <li>
+          <Link to="/dashboard" className="hover:underline">
+            Dashboard
+          </Link>
+        </li>
+        <li>
           <Link to="/browse-equipment" className="hover:underline">
             Browse Equipment
           </Link>

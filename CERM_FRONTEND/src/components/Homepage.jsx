@@ -1,8 +1,6 @@
 import Navbar from "./Navbar";
 import HeroSection from "./HeroSection";
 
-import ConstructionEquipment from "./ConstructionEquipment";
-
 const Homepage = () => {
   return (
     <div className="bg-gray-100">
@@ -10,6 +8,7 @@ const Homepage = () => {
       <Navbar />
       {/* Hero Section */}
       <HeroSection />
+      
       
       {/* Features Section */}
       <section className="py-16 px-5 text-center">
