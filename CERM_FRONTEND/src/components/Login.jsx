@@ -1,11 +1,13 @@
 import { useFormik } from "formik";
 import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
 import * as Yup from "yup";
 import Navbar from "./Navbar";
 import axios from "axios";
 
 const LoginForm = () => {
   const navigate = useNavigate();
+  const [loginError, setLoginError] = useState('');
 
   const formik = useFormik({
     initialValues: {
@@ -18,21 +20,35 @@ const LoginForm = () => {
       password: Yup.string()
         .min(6, "Must be at least 6 characters")
         .required("Password is required"),
-      user_role: Yup.number()
+      user_role: Yup.string()  // Changed from number to string type
         .required("Role is required")
-        .oneOf([1, 2, 3], "Invalid role selected"),
+        .oneOf(["1", "2", "3"], "Invalid role selected"),  // Changed to string values to match select options
     }),
     onSubmit: async (values) => {
       try {
-        const response = await axios.post("http://localhost:5000/login", values);
-        alert(response.data.message); // Show success message
-        localStorage.setItem("token", response.data.token);
-        localStorage.setItem("role", response.data.role);
-        navigate("/"); // Redirect to dashboard after login
+        console.log('Submitting values:', values); // Log the values being sent
+        
+        const response = await axios.post(
+          "http://localhost:5000/api/auth/login", 
+          {
+            username: values.username,
+            password: values.password,
+            user_role: parseInt(values.user_role)
+          }
+        );
+    
+        console.log('Response:', response);
+        alert("Login Successfull")
+        navigate("/") // Log the response
+        
+        // ... rest of your code
+    
       } catch (error) {
+        console.error('Error details:', error); // Log the full error
+        console.error('Response data:', error.response?.data); // Log the error response
         alert(error.response?.data?.error || "Login failed");
       }
-    },
+    }
   });
 
   return (
@@ -54,7 +70,9 @@ const LoginForm = () => {
               value={formik.values.username}
             />
             {formik.touched.username && formik.errors.username ? (
-              <p className="text-red-500 text-sm mt-1">{formik.errors.username}</p>
+              <p className="text-red-500 text-sm mt-1">
+                {formik.errors.username}
+              </p>
             ) : null}
           </div>
 
@@ -69,7 +87,9 @@ const LoginForm = () => {
               value={formik.values.password}
             />
             {formik.touched.password && formik.errors.password ? (
-              <p className="text-red-500 text-sm mt-1">{formik.errors.password}</p>
+              <p className="text-red-500 text-sm mt-1">
+                {formik.errors.password}
+              </p>
             ) : null}
           </div>
 
@@ -88,7 +108,9 @@ const LoginForm = () => {
               <option value="3">Customer</option>
             </select>
             {formik.touched.user_role && formik.errors.user_role ? (
-              <p className="text-red-500 text-sm mt-1">{formik.errors.user_role}</p>
+              <p className="text-red-500 text-sm mt-1">
+                {formik.errors.user_role}
+              </p>
             ) : null}
           </div>
 
@@ -105,7 +127,10 @@ const LoginForm = () => {
           </a>
           <p className="mt-2 font-semibold">
             Not registered?{" "}
-            <Link to="/register" className="text-color font-bold hover:underline">
+            <Link
+              to="/register"
+              className="text-color font-bold hover:underline"
+            >
               Create an account
             </Link>
           </p>

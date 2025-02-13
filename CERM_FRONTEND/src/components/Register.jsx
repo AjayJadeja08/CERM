@@ -33,6 +33,7 @@ const RegistrationForm = () => {
         .required("Required"),
     }),
     onSubmit: async (values) => {
+      
       const formattedValues = {
         ...values,
         user_role: roleMapping[values.user_role], // Convert role string to number
@@ -41,7 +42,7 @@ const RegistrationForm = () => {
       console.log("Registration Data:", formattedValues);
 
       try {
-        const response = await fetch("http://localhost:5000/register", {
+        const response = await fetch("http://localhost:5000/api/auth/register", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -77,10 +78,10 @@ const RegistrationForm = () => {
                 className="w-full p-2 border border-gray-300 rounded mt-1"
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-                value={formik.values.firstName}
+                value={formik.values.first_name}
               />
-              {formik.touched.firstName && formik.errors.firstName ? (
-                <p className="text-red-500 text-sm mt-1">{formik.errors.firstName}</p>
+              {formik.touched.first_name && formik.errors.first_name ? (
+                <p className="text-red-500 text-sm mt-1">{formik.errors.first_name}</p>
               ) : null}
             </div>
             <div className="w-1/2">
@@ -91,10 +92,10 @@ const RegistrationForm = () => {
                 className="w-full p-2 border border-gray-300 rounded mt-1"
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-                value={formik.values.lastName}
+                value={formik.values.last_name}
               />
-              {formik.touched.lastName && formik.errors.lastName ? (
-                <p className="text-red-500 text-sm mt-1">{formik.errors.lastName}</p>
+              {formik.touched.last_name && formik.errors.last_name ? (
+                <p className="text-red-500 text-sm mt-1">{formik.errors.last_name}</p>
               ) : null}
             </div>
           </div>
@@ -121,15 +122,15 @@ const RegistrationForm = () => {
               className="w-full p-2 border border-gray-300 rounded mt-1"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              value={formik.values.role}
+              value={formik.values.user_role}
             >
               <option value="">Select Role</option>
               <option value="admin">Admin</option>
               <option value="staff">Staff</option>
               <option value="customer">Customer</option>
             </select>
-            {formik.touched.role && formik.errors.role ? (
-              <p className="text-red-500 text-sm mt-1">{formik.errors.role}</p>
+            {formik.touched.user_role && formik.errors.user_role ? (
+              <p className="text-red-500 text-sm mt-1">{formik.errors.user_role}</p>
             ) : null}
           </div>
 
@@ -171,10 +172,10 @@ const RegistrationForm = () => {
               className="w-full p-2 border border-gray-300 rounded mt-1"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              value={formik.values.contactNumber}
+              value={formik.values.user_contact}
             />
-            {formik.touched.contactNumber && formik.errors.contactNumber ? (
-              <p className="text-red-500 text-sm mt-1">{formik.errors.contactNumber}</p>
+            {formik.touched.user_contact && formik.errors.user_contact ? (
+              <p className="text-red-500 text-sm mt-1">{formik.errors.user_contact}</p>
             ) : null}
           </div>
 
